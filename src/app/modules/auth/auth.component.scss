@@ -1,0 +1,27 @@
+.login {
+  &-wrapper {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(60rem 60rem at -10% -10%, rgba(0, 0, 0, 0.06), transparent 60%),
+      radial-gradient(50rem 50rem at 110% 10%, rgba(0, 0, 0, 0.04), transparent 60%);
+    padding: 16px;
+  }
+
+  &-card {
+    width: min(420px, 92vw);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  &-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 8px;
+  }
+}
+
+.full {
+  width: 100%;
+}

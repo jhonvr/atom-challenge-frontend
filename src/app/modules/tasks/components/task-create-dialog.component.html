@@ -1,0 +1,25 @@
+<header class="header">
+  <h2>{{isEdit ? 'Editar tarea' : 'Nueva tarea'}}</h2>
+</header>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" maxlength="120" />
+    <mat-error *ngIf="form.controls.title.touched && form.controls.title.hasError('required')">
+      El título es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput rows="4" formControlName="description"></textarea>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button type="button" (click)="dialogRef.close(null)">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">
+      {{isEdit ? 'Guardar cambios' : 'Crear'}}
+    </button>
+  </div>
+</form>

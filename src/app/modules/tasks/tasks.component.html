@@ -1,0 +1,88 @@
+<header class="toolbar">
+  <h1>Mis tareas</h1>
+
+  <div class="actions">
+    <button mat-stroked-button (click)="logOut()">Cerrar sesión</button>
+    <button mat-flat-button color="primary" (click)="openCreate()">
+      <mat-icon>add</mat-icon>
+      Nueva tarea
+    </button>
+  </div>
+</header>
+
+@if (!hasAnything()) {
+  <section class="empty">
+    <mat-icon class="empty__icon">checklist</mat-icon>
+    <h2>No hay tareas todavía</h2>
+    <p>Crea tu primera tarea para empezar a organizarte.</p>
+    <button mat-flat-button color="primary" (click)="openCreate()">Crear primera tarea</button>
+  </section>
+} @else {
+  <section class="grid">
+    <mat-card class="col">
+      <mat-card-header>
+        <mat-card-title>Pendientes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="task-list">
+          @for (p of pending(); track p.id) {
+            <li class="task">
+              <div class="task__left">
+                <mat-checkbox
+                  [checked]="p.completed"
+                  (change)="onToggle($event, p)"
+                  aria-label="Marcar completada">
+                </mat-checkbox>
+                <div class="task__text">
+                  <div class="task__title">{{ p.title }}</div>
+                  @if (p.description) { <div class="task__desc">{{ p.description }}</div> }
+                  <div class="task__meta">{{ p.createdAt | date:'short' }}</div>
+                </div>
+              </div>
+              <div class="task__actions">
+                <button mat-button (click)="rename(p)">Editar</button>
+                <button mat-button color="warn" (click)="remove(p)">Eliminar</button>
+              </div>
+            </li>
+          }
+          @if (pending().length === 0) {
+            <li class="muted">No tienes tareas pendientes.</li>
+          }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="col">
+      <mat-card-header>
+        <mat-card-title>Completadas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul class="task-list">
+          @for (c of completed(); track c.id) {
+            <li class="task task--done">
+              <div class="task__left">
+                <mat-checkbox
+                  [checked]="c.completed"
+                  (change)="onToggle($event, c)"
+                  aria-label="Marcar pendiente">
+                </mat-checkbox>
+                <div class="task__text">
+                  <div class="task__title line-through">{{ c.title }}</div>
+                  @if (c.description) { <div class="task__desc">{{ c.description }}</div> }
+                  <div class="task__meta">{{ c.createdAt | date:'short' }}</div>
+                </div>
+              </div>
+              <div class="task__actions">
+                <button mat-button (click)="rename(c)">Editar</button>
+                <button mat-button color="warn" (click)="remove(c)">Eliminar</button>
+              </div>
+            </li>
+          }
+          @if (completed().length === 0) {
+            <li class="muted">Aún no completas tareas.</li>
+          }
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </section>
+}

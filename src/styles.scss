@@ -1,0 +1,28 @@
+@import "assets/styles/theme";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cros-dialog {
+  &-panel {
+    border-radius: 16px !important;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25) !important;
+    width: min(560px, 92vw) !important;
+  }
+
+  &-backdrop {
+    background: rgba(0, 0, 0, 0.48) !important;
+    backdrop-filter: blur(2px);
+  }
+}
+
+.full {
+  width: 100%;
+}
