@@ -64,7 +64,7 @@ export class TasksComponent implements OnInit {
   }
 
   async rename(t: any) {
-    const ref = this.dialog.open(TaskCreateDialogComponent, { t });
+    const ref = this.dialog.open(TaskCreateDialogComponent, t);
     const result = await firstValueFrom(ref.afterClosed());
     if (result) await this.store.update(result);
   }

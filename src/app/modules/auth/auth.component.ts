@@ -51,7 +51,7 @@ export class AuthComponent {
       const res = await firstValueFrom(this.authService.findUser(email));
 
       if (res?.exists && res.user) {
-        this.sessionService.setUser(res.user);
+        this.sessionService.setUser(res.user.id);
         await this.router.navigateByUrl('/tasks');
         return;
       }
@@ -67,7 +67,7 @@ export class AuthComponent {
 
       if (confirm) {
         const created = await firstValueFrom(this.authService.createUser(email));
-        this.sessionService.setUser(created);
+        this.sessionService.setUser(created.id);
         this.router.navigateByUrl('/tasks');
       }
     } finally {

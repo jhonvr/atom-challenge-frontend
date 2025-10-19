@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const BASE = 'api'
+const BASE = ''
 @Injectable()
 export class TaskService {
   private http = inject(HttpClient);
 
-  listTasks(userId: string): Observable<any[]> {
-    return this.http.post<any[]>(
-      `${BASE}/tasks/`, { userId }
+  listTasks(): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${BASE}/tasks/`
     );
   }
   createTask(body: any): Observable<any> {
     return this.http.post<any>(
-      `${BASE}/tasks/`, { body }
+      `${BASE}/tasks/`, body
     );
   }
   updateTask(body: any): Observable<any> {

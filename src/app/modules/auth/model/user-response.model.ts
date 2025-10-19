@@ -1,4 +1,10 @@
 export interface UserResponse {
   exists: boolean;
-  user: string;
+  user: User;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  createdAt: number;
 }

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@modules/auth/model/user-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -10,8 +11,8 @@ export class SessionService {
     return localStorage.getItem(this.key);
   }
 
-  setUser(email: string) {
-    localStorage.setItem(this.key, email);
+  setUser(id: string) {
+    localStorage.setItem(this.key, id);
   }
 
   logout() {

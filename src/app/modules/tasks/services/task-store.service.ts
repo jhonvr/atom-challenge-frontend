@@ -23,15 +23,12 @@ export class TaskServiceStore {
   );
 
   async load() {
-    const userId = this.session.currentUser();
-    if (!userId) return;
-    const data = await firstValueFrom(this.taskService.listTasks(userId));
+    const data = await firstValueFrom(this.taskService.listTasks());
     this._tasks.set(data);
   }
 
   async add(title: string, description: string) {
-    const userId = this.session.currentUser();
-    const created = await firstValueFrom(this.taskService.createTask({ userId, title, description }));
+    const created = await firstValueFrom(this.taskService.createTask({ title, description }));
     this._tasks.update(arr => [created, ...arr]);
   }
 
