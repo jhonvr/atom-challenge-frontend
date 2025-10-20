@@ -1,4 +1,3 @@
-import { SessionService } from './../../shared/services/session.service';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
