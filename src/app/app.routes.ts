@@ -15,5 +15,10 @@ export const routes: Routes = [
     path: 'tasks',
     canActivate: [canActivateAuth],
     loadComponent: () => import('./modules/tasks/tasks.component').then(c => c.TasksComponent)
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
