@@ -12,6 +12,7 @@ import { firstValueFrom } from 'rxjs';
 import { SessionService } from '@shared/services/session.service';
 import { ConfirmDialogComponent } from '@shared/components/confirm/confirm.component';
 import { DialogService } from '@shared/services/dialog.service';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   selector: 'app-auth',
@@ -37,6 +38,7 @@ export class AuthComponent {
   private sessionService = inject(SessionService);
   private router = inject(Router);
   private dialogService = inject(DialogService);
+  private toastService = inject(ToastService)
 
   loading = signal(false);
   form = inject(FormBuilder).nonNullable.group({ email: ['', [Validators.required, Validators.email]] });
@@ -68,6 +70,7 @@ export class AuthComponent {
       if (confirm) {
         const created = await firstValueFrom(this.authService.createUser(email));
         this.sessionService.setUser(created.id);
+        this.toastService.success('Usuario creado correctamente');
         this.router.navigateByUrl('/tasks');
       }
     } finally {

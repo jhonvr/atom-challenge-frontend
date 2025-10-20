@@ -8,15 +8,15 @@ export class SessionService {
   private router = inject(Router);
 
   currentUser(): string | null {
-    return localStorage.getItem(this.key);
+    return sessionStorage.getItem(this.key);
   }
 
   setUser(id: string) {
-    localStorage.setItem(this.key, id);
+    sessionStorage.setItem(this.key, id);
   }
 
   logout() {
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigateByUrl('/login');
   }
 

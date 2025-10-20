@@ -26,3 +26,50 @@ body {
 .full {
   width: 100%;
 }
+
+.cros-toast {
+  font-weight: 600;
+  letter-spacing: .2px;
+  border-radius: 12px !important;
+  padding: 10px 16px !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .16) !important;
+
+  &--success {
+    background: #0f9d58;
+    color: #fff;
+  }
+
+  &--error {
+    background: #d93025;
+    color: #fff;
+  }
+
+  &--info {
+    background: #1a73e8;
+    color: #fff;
+  }
+
+  &--warning {
+    background: #f29900;
+    color: #111;
+
+    .mdc-snackbar__actions .mdc-button {
+      color: #111 !important;
+    }
+  }
+}
+
+.mdc-snackbar {
+  &__label {
+    font-size: 14px !important;
+  }
+
+  &__actions .mdc-button {
+    color: #fff !important;
+    font-weight: 700;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  z-index: 1300;
+}

@@ -4,5 +4,13 @@ export interface TaskStore {
   title: string;
   description?: string;
   createdAt: number;
-  completed: boolean;
+  updatedAt?: number;
+  completed?: boolean;
+  deleted?: boolean;
+  deletedAt?: number;
+}
+
+export interface Task {
+  title: string;
+  description?: string;
 }

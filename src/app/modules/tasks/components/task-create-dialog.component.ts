@@ -36,7 +36,6 @@ export class TaskCreateDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: TaskStore) { }
 
   ngOnInit(): void {
-    debugger
     if (this.isEdit) {
       const t = this.data!;
       this.form.patchValue({id: t.id, title: t.title, description: t.description ?? '' });

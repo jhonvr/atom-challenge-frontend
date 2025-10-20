@@ -1,13 +1,11 @@
 import { Injectable, computed, signal, inject } from '@angular/core';
-import { SessionService } from '@shared/services/session.service';
 import { firstValueFrom } from 'rxjs';
-import { TaskStore } from '../model/task-store.model';
+import { Task, TaskStore } from '../model/task-store.model';
 import { TaskService } from './task.service';
 
 @Injectable()
 export class TaskServiceStore {
   private taskService = inject(TaskService);
-  private session = inject(SessionService);
 
   private _tasks = signal<TaskStore[]>([]);
   readonly tasks = computed(() => this._tasks());
@@ -27,19 +25,19 @@ export class TaskServiceStore {
     this._tasks.set(data);
   }
 
-  async add(title: string, description: string) {
-    const created = await firstValueFrom(this.taskService.createTask({ title, description }));
+  async add(body: Task) {
+    const created = await firstValueFrom(this.taskService.createTask(body));
     this._tasks.update(arr => [created, ...arr]);
   }
 
-  async toggleComplete(taskId: string, completed: boolean) {
-    await firstValueFrom(this.taskService.updateTask(taskId));
-    this._tasks.update(arr => arr.map(t => t.id === taskId ? { ...t, completed } : t));
+  async toggleComplete(task: TaskStore) {
+    await firstValueFrom(this.taskService.updateTask(task));
+    this.load();
   }
 
   async update(body: TaskStore) {
     await firstValueFrom(this.taskService.updateTask(body));
-    this._tasks.update(arr => arr.map(t => t.id === body.id ? { ...t, ...body } : t));
+    this.load();
   }
 
   async remove(taskId: string) {

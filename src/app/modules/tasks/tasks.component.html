@@ -36,7 +36,10 @@
                 <div class="task__text">
                   <div class="task__title">{{ p.title }}</div>
                   @if (p.description) { <div class="task__desc">{{ p.description }}</div> }
-                  <div class="task__meta">{{ p.createdAt | date:'short' }}</div>
+                  <div class="task__meta">
+                    Creada: {{ p.createdAt | date:'short' }}
+                    · Modificada: {{ p.updatedAt ? (p.updatedAt | date:'short') : '—' }}
+                  </div>
                 </div>
               </div>
               <div class="task__actions">
@@ -69,11 +72,13 @@
                 <div class="task__text">
                   <div class="task__title line-through">{{ c.title }}</div>
                   @if (c.description) { <div class="task__desc">{{ c.description }}</div> }
-                  <div class="task__meta">{{ c.createdAt | date:'short' }}</div>
+                  <div class="task__meta">
+                    Creada: {{ c.createdAt | date:'short' }}
+                    · Modificada: {{ c.updatedAt ? (c.updatedAt | date:'short') : '—' }}
+                  </div>
                 </div>
               </div>
               <div class="task__actions">
-                <button mat-button (click)="rename(c)">Editar</button>
                 <button mat-button color="warn" (click)="remove(c)">Eliminar</button>
               </div>
             </li>

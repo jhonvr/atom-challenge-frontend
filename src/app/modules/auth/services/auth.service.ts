@@ -10,7 +10,7 @@ export class AuthService {
   private http = inject(HttpClient);
 
   findUser(email: string): Observable<UserResponse> {
-    return this.http.post<any>(`${BASE}/users/getUser`, { email });
+    return this.http.post<UserResponse>(`${BASE}/users/getUser`, { email });
   }
 
   createUser(email: string): Observable<User> {

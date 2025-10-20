@@ -12,6 +12,8 @@ import { ConfirmDialogComponent } from '@shared/components/confirm/confirm.compo
 import { TaskCreateDialogComponent } from './components/task-create-dialog.component';
 import { TaskServiceStore } from './services/task-store.service';
 import { TaskService } from './services/task.service';
+import { TaskStore } from './model/task-store.model';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   standalone: true,
@@ -30,7 +32,8 @@ import { TaskService } from './services/task.service';
 export class TasksComponent implements OnInit {
   private store = inject(TaskServiceStore);
   private dialog = inject(DialogService);
-  session = inject(SessionService);
+  private session = inject(SessionService);
+  private toastService = inject(ToastService)
 
   pending = this.store.pendingSorted;
   completed = this.store.completedSorted;
@@ -56,25 +59,39 @@ export class TasksComponent implements OnInit {
   async openCreate() {
     const ref = this.dialog.open(TaskCreateDialogComponent);
     const result = await firstValueFrom(ref.afterClosed());
-    if (result) await this.store.add(result.title, result.description);
+    const body = {
+      title: result.title, description: result.description
+    }
+    if (result) {
+      await this.store.add(body);
+      this.toastService.success('Tarea creada correctamente');
+    }
   }
 
-  onToggle(evt: MatCheckboxChange, t: any) {
-    this.store.toggleComplete(t.id, evt.checked);
+  async onToggle(evt: MatCheckboxChange, t: TaskStore) {
+    t.completed = evt.checked;
+    await this.store.toggleComplete(t);
+    this.toastService.success(`Estado de la tarea actualizada correctamente`);
   }
 
-  async rename(t: any) {
+  async rename(t: TaskStore) {
     const ref = this.dialog.open(TaskCreateDialogComponent, t);
     const result = await firstValueFrom(ref.afterClosed());
-    if (result) await this.store.update(result);
+    if (result) {
+      await this.store.update(result);
+      this.toastService.success('Tarea actualizada correctamente');
+    }
   }
 
-  async remove(t: any) {
+  async remove(t: TaskStore) {
     const ref = this.dialog.open(ConfirmDialogComponent, {
       title: 'Eliminar tarea',
       message: `¿Deseas eliminar la tarea:<br><strong>${t.title}</strong>?`,
     });
     const confirm = await firstValueFrom(ref.afterClosed());
-    if (confirm) await this.store.remove(t.id);
+    if (confirm) {
+      await this.store.remove(t.id);
+      this.toastService.success('Tarea eliminada correctamente');
+    }
   }
 }
