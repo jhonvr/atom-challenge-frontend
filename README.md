@@ -1,27 +1,70 @@
 # AtomChallengeFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+El proyecto se generó con angular versión 17.3.17 y angular-material 17.3.10
 
-## Development server
+## Install
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Validar si se tiene angular-cli a nivel global con comand en cmd
+`ng version`
+- Si no se tiene angular-cli instalar globalmente con la version 17
+`npm i -g @angular-cli@17`
 
-## Code scaffolding
+- Validar si se tiene instalado nodejs
+`node -v` recomendado 22
+- Si no, se tiene que instalar desde la web oficial de nodejs
+`https://nodejs.org/en/download`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Inicio Firebase: Realizar los pasos si aun no lo hemos hecho en backend
+- Validar si se tiene firebase instalado globalmente
+`firebase --version`
 
-## Build
+- Si no se tiene firebase, instalar globalmente 
+`npm install -g firebase-tools`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Realizar login de firebase, para conectarse y visualizar los proyectos existentes
+`firebase login`
 
-## Running unit tests
+- Crear proyecto en consola firebase:
+`https://console.firebase.google.com` -> `Add Project` -> `Crear proyecto`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Fin Firebase
 
-## Running end-to-end tests
+## Elegir proyecto firebase
+- Luego usar el proyecto creo o existente
+`firebase init functions`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Luego vamos a la ruta del frontend e instalemos las dependencias 
+`npm i`
 
-## Further help
+## Deployment
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Generar si aun no lo hemos hecho en el front
+Activar Blaze
+`https://console.firebase.google.com/project/banckend-tasks/usage/details`
+
+Y en google Cloud console
+`Google Cloud Console → IAM & Admin → Service Accounts → Create. `
+
+Agregar roles:
+`Firebase Hosting Admin`
+`Service Account User`
+
+Otro rol: Buscar <PROJECT_NUMBER>-compute@developer.gserviceaccount.com
+`PROJECT_NUMBER: se busca en detalle del proyecto consola de firebase`
+Luego:
+`Cloud Datastore User (Firestore usa Datastore API en IAM):`
+`Abre Google Cloud Console → IAM → IAM.`
+`Busca esa cuenta (-compute@developer.gserviceaccount.com).`
+`Editar → Agregar otro rol → Cloud Datastore User → Guardar.`
+
+Descarga la KEY y agregarlo en el secrets en github
+`Settings → Secrets and variables → Actions → New repository secret`
+`FIREBASE_SERVICE_ACCOUNT_BANCKEND_TASKS`
+
+Para generar el despliegue a firebase realizar push a la rama develop
+
+## Architecture
+
+Arquitectura modular basada en features (feature-based architecture). Cada módulo contiene su propia capa de componentes, modelos y servicios, garantizando separación de responsabilidades, escalabilidad y mantenibilidad
+
+Se envia por interceptor un `code` como cabecera el id del usuario logeado
