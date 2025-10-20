@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { SessionService } from './../../shared/services/session.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -32,7 +33,7 @@ import { ToastService } from '@shared/services/toast.service';
     AuthService
   ]
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
 
   private authService = inject(AuthService);
   private sessionService = inject(SessionService);
@@ -42,6 +43,10 @@ export class AuthComponent {
 
   loading = signal(false);
   form = inject(FormBuilder).nonNullable.group({ email: ['', [Validators.required, Validators.email]] });
+
+  ngOnInit(): void {
+      this.sessionService.clear();
+  }
 
   async submit() {
     if (this.form.invalid) return;

@@ -16,8 +16,12 @@ export class SessionService {
   }
 
   logout() {
-    sessionStorage.clear();
+    this.clear();
     this.router.navigateByUrl('/login');
+  }
+
+  clear() {
+    sessionStorage.clear();
   }
 
 }
