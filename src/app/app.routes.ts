@@ -18,7 +18,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: '/tasks',
     pathMatch: 'full'
   }
 ];
